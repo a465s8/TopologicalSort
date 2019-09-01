@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body id="body">
+  <textarea id="ta" style="width:200px;height:80px;"></textarea>
+  <input id="bt" value="确认" type="button"/>
+  <input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/>
+</body>
+<script src="./index.js"></script>
+<script src="./viz.js"></script>
+<script src="./full.render.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+//js 读取txt文件
+function openFile(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function() {
+                if(reader.result) {
+                  //显示文件内容
+                  console.log(reader.result);
+                  document.getElementById("ta").value = reader.result;
+                }
+            };
+            reader.readAsText(input.files[0]);
+};
+
+//确认按钮点击事件
+document.getElementById("bt").onclick = function(){
+  //清空旧svg
+  var body = document.getElementById("body");
+  var svg = document.getElementById("svgBefore");
+  if(svg != null)
+    body.removeChild(svg);
+  
+
+  var text = document.getElementById("ta").value;
+  var arr = text.split("\n");
+  var map = new Map();//保存所有Vertix的集合
+  var edges = new Array();//保存所有的Edge
+  var graph = 'digraph graphname{'
+  for(var i=0;i<arr.length;i++){
+      var temp = arr[i].split(",");
+      if(temp.length != 2){
+        alert("输入错误，请重新检查");
+        return;
+      }
+      var v0 = temp[0].trim().substring(1);
+      var v1 = temp[1].trim().substring(0, temp[1].trim().length-1);
+      var v00,v11;//两个Vertix对象
+      if(map.get(v0) == null){
+        v00 = new Vertex(v0);
+        map.set(v0, v00);
+      }else
+        v00 = map.get(v0);
+
+      if(map.get(v1) == null){
+        v11 = new Vertex(v1);
+        map.set(v1, v11);
+      }else
+        v11 = map.get(v1);    
+
+      var edge = new Edge(v00, v11);
+      edges.push(edge);
+      graph = graph + v0 + '->' + v1 +';';
+  }
+  //画出拓扑排序前的图
+  graph += '}';
+  var viz = new Viz();
+  viz.renderSVGElement(graph)
+  .then(function(element) {
+    element.id = "svgBefore";
+    document.body.appendChild(element);
+  })
+  .catch(error => {
+    // Create a new Viz instance (@see Caveats page for more info)
+    viz = new Viz();
+
+    // Possibly display the error
+    console.error(error);
+  });
+
+  //Vertex数组
+  var vertexs = new Array();
+  var mapIter  = map.values();
+  var temp = mapIter.next().value;
+  while(temp != null){
+    vertexs.push(temp);
+    temp = mapIter.next().value;
+  }
+  //图
+  var g = new Graph(vertexs,edges);
+  g.init();
+  g.topo_sort(g);
+  g.output();
+  console.log(g.sort_result);//打印排序后的结果
+}
+</script>
+
+</html>
