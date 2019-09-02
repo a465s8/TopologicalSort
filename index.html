@@ -5,11 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+	<script type="text/javascript" src="./html2canvas.js"></script>
+	<script type="text/javascript" src="./canvas2image.js"></script>
+	<script type="text/javascript" src="./base64.js"></script>
+<script src="svgToPng.js"></script>
+
 </head>
-<body id="body">
+
+
+
+<body id="body" class="svg-wrap">
   <textarea id="ta" style="width:200px;height:80px;"></textarea>
   <input id="bt" value="确认" type="button"/>
   <input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/>
+  <button onclick="change()">change</button>
+<div id="myCanvas">
+</div>
 </body>
 <script src="./index.js"></script>
 <script src="./viz.js"></script>
@@ -34,7 +45,7 @@ function openFile(event) {
 //确认按钮点击事件
 document.getElementById("bt").onclick = function(){
   //清空旧svg
-  var body = document.getElementById("body");
+  var body = document.getElementById("myCanvas");
   var svg = document.getElementById("svgBefore");
   if(svg != null)
     body.removeChild(svg);
@@ -76,7 +87,7 @@ document.getElementById("bt").onclick = function(){
   viz.renderSVGElement(graph)
   .then(function(element) {
     element.id = "svgBefore";
-    document.body.appendChild(element);
+    document.getElementById("myCanvas").appendChild(element);
   })
   .catch(error => {
     // Create a new Viz instance (@see Caveats page for more info)
@@ -102,5 +113,24 @@ document.getElementById("bt").onclick = function(){
   console.log(g.sort_result);//打印排序后的结果
 }
 </script>
+<script type="text/javascript">
+function change(){
+var svgXml = $('#myCanvas').html();
 
+var image = new Image();
+image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+
+var canvas = document.createElement('canvas');  //准备空画布
+canvas.width = $('.svg-wrap svg').width();
+canvas.height = $('.svg-wrap svg').height();
+
+var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
+context.drawImage(image, 0, 0);
+
+var a = document.createElement('a');
+a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
+a.download = "MapByMathArtSys";  //设定下载名称
+a.click(); //点击触发下载
+}
+</script>
 </html>
