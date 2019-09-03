@@ -19,8 +19,14 @@
   <input id="bt" value="确认" type="button"/>
   <input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/>
   <button onclick="change()">change</button>
-<div id="myCanvas">
+
+<div id="BeforeCanvas">
+<h1>关系图</h1>
 </div>
+<div id="SortCanvas">
+
+</div>
+
 </body>
 <script src="./index.js"></script>
 <script src="./viz.js"></script>
@@ -45,11 +51,15 @@ function openFile(event) {
 //确认按钮点击事件
 document.getElementById("bt").onclick = function(){
   //清空旧svg
-  var body = document.getElementById("myCanvas");
+  var body1 = document.getElementById("BeforeCanvas");
+  var body2 = document.getElementById("SortCanvas")
   var svg = document.getElementById("svgBefore");
+  var svgs=document.getElementById("svgSort");
   if(svg != null)
-    body.removeChild(svg);
-  
+  {
+    body1.removeChild(svg);
+	body2.removeChild(svgs);
+  }
 
   var text = document.getElementById("ta").value;
   var arr = text.split("\n");
@@ -87,7 +97,7 @@ document.getElementById("bt").onclick = function(){
   viz.renderSVGElement(graph)
   .then(function(element) {
     element.id = "svgBefore";
-    document.getElementById("myCanvas").appendChild(element);
+    document.getElementById("BeforeCanvas").appendChild(element);
   })
   .catch(error => {
     // Create a new Viz instance (@see Caveats page for more info)
@@ -101,6 +111,7 @@ document.getElementById("bt").onclick = function(){
   var vertexs = new Array();
   var mapIter  = map.values();
   var temp = mapIter.next().value;
+  
   while(temp != null){
     vertexs.push(temp);
     temp = mapIter.next().value;
@@ -111,11 +122,53 @@ document.getElementById("bt").onclick = function(){
   g.topo_sort(g);
   g.output();
   console.log(g.sort_result);//打印排序后的结果
+  
+  
+  //输出拓扑排序后的图
+  viz = new Viz();
+  var i=0;  
+  var sort_graph = 'digraph graphname{'
+  if(g.sort_result.last_key!=-1){
+        for (var key in g.sort_result) {
+            if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
+                var element = g.sort_result[key];
+				for( i=0;i<element.length;i++)
+				{
+                console.log('test'+i+element[i].name);
+				
+				if(i+1<element.length)
+				{
+				sort_graph+=element[i].name+'->'+element[i+1].name+';';
+				}
+				
+				}
+				
+            }
+		}
+		
+		
+		sort_graph+='}';
+		console.log(sort_graph);
+	viz.renderSVGElement(sort_graph)
+  .then(function(element) {
+    element.id = "svgSort";
+    document.getElementById("SortCanvas").appendChild(element);
+  })
+  .catch(error => {
+    // Create a new Viz instance (@see Caveats page for more info)
+    viz = new Viz();
+
+    // Possibly display the error
+    console.error(error);
+  });
+}
+  
+
 }
 </script>
 <script type="text/javascript">
 function change(){
-var svgXml = $('#myCanvas').html();
+var svgXml = $('#SortCanvas').html();
 
 var image = new Image();
 image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
