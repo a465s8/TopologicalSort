@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>课程编制系统</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="jumbotron.css" rel="stylesheet">
-    <script type="text/javascript" src="./html2canvas.js"></script>
-    <script type="text/javascript" src="./canvas2image.js"></script>
-    <script type="text/javascript" src="./base64.js"></script>
-    <script src="svgToPng.js"></script>
-
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/jumbotron.css" rel="stylesheet">
 </head>
 
 
@@ -84,10 +77,13 @@
 
 
 </body>
-<script src="./index.js"></script>
-<script src="./viz.js"></script>
-<script src="./full.render.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="./html2canvas.js"></script>
+<script  src="./canvas2image.js"></script>
+<script  src="./base64.js"></script> -->
+<script src="./js/svgToPng.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/viz.js"></script>
+<script src="./js/full.render.js"></script>
 <script type="text/javascript">
     //js 读取txt文件
     function openFile(event) {
@@ -116,6 +112,8 @@
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
+        if(arr[arr.length-1] == "" || arr[arr.length-1].length == 0)//最后多处一个换行符的情况
+            arr.pop();
         var map = new Map();//保存所有Vertix的集合
         var edges = new Array();//保存所有的Edge
         var graph = 'digraph graphname{'
@@ -167,49 +165,49 @@
         }
         //图
         var g = new Graph(vertexs,edges);
-        g.init();
-        g.topo_sort(g);
-        g.output();
-        console.log(g.sort_result);//打印排序后的结果
+        var result_tree = new ResultTree();
+        g.topo_sort(g,result_tree.root);
+        var sort_canvas = document.getElementById('SortCanvas');
+        g.draw_results(sort_canvas);
 
 
         //输出拓扑排序后的图
-        viz = new Viz();
-        var i=0;
-        var sort_graph = 'digraph graphname{'
-        if(g.sort_result.last_key!=-1){
-            for (var key in g.sort_result) {
-                if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
-                    var element = g.sort_result[key];
-                    for( i=0;i<element.length;i++)
-                    {
-                        console.log('test'+i+element[i].name);
+        // viz = new Viz();
+        // var i=0;
+        // var sort_graph = 'digraph graphname{'
+        // if(g.sort_result.last_key!=-1){
+        //     for (var key in g.sort_result) {
+        //         if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
+        //             var element = g.sort_result[key];
+        //             for( i=0;i<element.length;i++)
+        //             {
+        //                 console.log('test'+i+element[i].name);
 
-                        if(i+1<element.length)
-                        {
-                            sort_graph+=element[i].name+'->'+element[i+1].name+';';
-                        }
+        //                 if(i+1<element.length)
+        //                 {
+        //                     sort_graph+=element[i].name+'->'+element[i+1].name+';';
+        //                 }
 
-                    }
+        //             }
 
-                }
-            }
+        //         }
+        //     }
 
 
-            sort_graph+='}';
-            console.log(sort_graph);
-            viz.renderSVGElement(sort_graph)
-                .then(function(element) {
-                    element.id = "svgSort";
-                    document.getElementById("SortCanvas").appendChild(element);
-                })
-                .catch(error => {
-                    // Create a new Viz instance (@see Caveats page for more info)
-                    viz = new Viz();
-                    // Possibly display the error
-                    console.error(error);
-                });
-        }
+        //     sort_graph+='}';
+        //     console.log(sort_graph);
+        //     viz.renderSVGElement(sort_graph)
+        //         .then(function(element) {
+        //             element.id = "svgSort";
+        //             document.getElementById("SortCanvas").appendChild(element);
+        //         })
+        //         .catch(error => {
+        //             // Create a new Viz instance (@see Caveats page for more info)
+        //             viz = new Viz();
+        //             // Possibly display the error
+        //             console.error(error);
+        //         });
+        // }
 
     }
 </script>
