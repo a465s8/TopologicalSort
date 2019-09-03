@@ -120,6 +120,8 @@
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
+        if(arr[arr.length-1] == "" || arr[arr.length-1].length == 0)//最后多处一个换行符的情况
+            arr.pop();
         var map = new Map();//保存所有Vertix的集合
         var edges = new Array();//保存所有的Edge
         var graph = 'digraph graphname{'
