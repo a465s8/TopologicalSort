@@ -7,6 +7,7 @@
     <title>课程编制系统</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/jumbotron.css" rel="stylesheet">
+
 </head>
 
 
@@ -36,9 +37,8 @@
         <textarea id="ta" style="width:400px;height:180px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
         <br>
         <div>
-            <div style="width:100px;;margin:0;float:left;"><input id="bt" value="确认" type="button"/></div>
-            <div style="width:120px;padding:0;margin:0;float:left;"><input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/></div>
-
+            <div style="width:100px;;margin:0;float:left;"><button id="bt" value="确认" type="button">生成</button></div>
+            <div style="width:120px;padding:0;margin:0;float:left;"><button onclick="openFile(event)" >导入文件</button></div>
             <div style="width:160px;padding:0;margin:0;float:left;"><button onclick="change()">change</button></div>
     </div>
 

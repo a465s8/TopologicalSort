@@ -1,187 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
 
 
-    <title>课程编制系统</title>
+  <title>教学计划编制系统</title>
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link href="./css/jumbotron-narrow.css" rel="stylesheet">
+  <link href="./css/Button.css" rel="stylesheet">
+  <script src="./js/ie8-responsive-file-warning.js"></script>
+  <script src="./js/ie-emulation-modes-warning.js"></script>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="jumbotron.css" rel="stylesheet">
+</head>
 
+<body>
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <script src="./index.js"></script>
-      <script src="./viz.js"></script>
-      <script src="./full.render.js"></script>
-      <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<div class="container">
+  <div class="header clearfix">
+    <h3 class="text-muted">教学计划编制</h3>
+  </div>
 
-    <![endif]-->
-  </head>
-
-  <body style="color: #2e6da4" id="body">
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
+  <div class="jumbotron" style="background-image: url('./picture/outlook.jpg');background-size: cover">
 
 
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">课程编制系统</a>
-        </div>
+    <div class="container" >
 
+
+
+      <textarea id="ta" style="width:500px;height:300px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
+      <br>
+      <div>
+       <button id="bt" value="确认" type="button" class="btn btn-blue">生成</button>
+        <button onclick="openFile(event)" class="btn btn-blue" style="text-align: center">导入文件</button>
+      <button onclick="change()" class="btn btn-blue">change</button>
       </div>
-    </nav>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" >
-      <div class="container" >
+    </div>
+  </div>
 
-
-
-          <textarea id="ta" style="width:400px;height:180px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
-          <br>
-
-
-
-
-        <div>
-          <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;"><input id="bt" value="确认" type="button"/></div>
-          <div style="width:50%;padding:0;margin:0;float:left;box-sizing:border-box;"><input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/></div>
-        </div>
-
+  <div class="row marketing" style="height: 200px">
+    <div class="col-lg-6">
+      <div id="BeforeCanvas">
+        <h3>课程关系图</h3>
       </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
+    <div class="col-lg-6">
+      <div id="SortCanvas">
+        <h3>课程安排图</h3>
       </div>
-
-      <hr>
-
-      <footer>
-        <p>@The most handsome group of STU</p>
-      </footer>
-    </div> <!-- /container -->
+    </div>
+  </div>
 
 
 
+</div> <!-- /container -->
+<footer>
+  <hr>
+  <p>@The most handsome group of STU</p>
+</footer>
 
-
-  </body>
-  <script type="text/javascript">
-
-    //js 读取txt文件
-    function openFile(event) {
-      var input = event.target;
-      var reader = new FileReader();
-      reader.onload = function() {
-        if(reader.result) {
-          //显示文件内容
-          console.log(reader.result);
-          document.getElementById("ta").value = reader.result;
-        }
-      };
-      reader.readAsText(input.files[0]);
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="./js/ie10-viewport-bug-workaround.js"></script>
+<script src="./js/svgToPng.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/viz.js"></script>
+<script src="./js/Button.js"></script>
+<script src="./js/full.render.js"></script>
+<script type="text/javascript">
+  //js 读取txt文件
+  function openFile(event) {
+    var input = event.target;
+    var reader = new FileReader();
+    reader.onload = function() {
+      if(reader.result) {
+        //显示文件内容
+        console.log(reader.result);
+        document.getElementById("ta").value = reader.result;
+      }
     };
-
-    //确认按钮点击事件
-    document.getElementById("bt").onclick = function(){
-      //清空旧svg
-      var body = document.getElementById("body");
-      var svg = document.getElementById("svgBefore");
-      if(svg != null)
-        body.removeChild(svg);
-
-
-      var text = document.getElementById("ta").value;
-      var arr = text.split("\n");
-      var map = new Map();//保存所有Vertix的集合
-      var edges = new Array();//保存所有的Edge
-      var graph = 'digraph graphname{'
-      for(var i=0;i<arr.length;i++){
-        var temp = arr[i].split(",");
-        if(temp.length != 2){
-          alert("输入错误，请重新检查");
-          return;
-        }
-        var v0 = temp[0].trim().substring(1);
-        var v1 = temp[1].trim().substring(0, temp[1].trim().length-1);
-        var v00,v11;//两个Vertix对象
-        if(map.get(v0) == null){
-          v00 = new Vertex(v0);
-          map.set(v0, v00);
-        }else
-          v00 = map.get(v0);
-
-        if(map.get(v1) == null){
-          v11 = new Vertex(v1);
-          map.set(v1, v11);
-        }else
-          v11 = map.get(v1);
-
-        var edge = new Edge(v00, v11);
-        edges.push(edge);
-        graph = graph + v0 + '->' + v1 +';';
-      }
-      //画出拓扑排序前的图
-      graph += '}';
-      var viz = new Viz();
-      viz.renderSVGElement(graph)
-              .then(function(element) {
-                element.id = "svgBefore";
-                document.body.appendChild(element);
-              })
-              .catch(error => {
-                // Create a new Viz instance (@see Caveats page for more info)
-                viz = new Viz();
-
-                // Possibly display the error
-                console.error(error);
-              });
-
-      //Vertex数组
-      var vertexs = new Array();
-      var mapIter  = map.values();
-      var temp = mapIter.next().value;
-      while(temp != null){
-        vertexs.push(temp);
-        temp = mapIter.next().value;
-      }
-      //图
-      var g = new Graph(vertexs,edges);
-      g.init();
-      g.topo_sort(g);
-      g.output();
-      console.log(g.sort_result);//打印排序后的结果
+    reader.readAsText(input.files[0]);
+  };
+  //确认按钮点击事件
+  document.getElementById("bt").onclick = function(){
+    //清空旧svg
+    var body1 = document.getElementById("BeforeCanvas");
+    var body2 = document.getElementById("SortCanvas")
+    var svg = document.getElementById("svgBefore");
+    var svgs=document.getElementById("svgSort");
+    if(svg != null)
+    {
+      body1.removeChild(svg);
+      body2.removeChild(svgs);
     }
-  </script>
+    var text = document.getElementById("ta").value;
+    var arr = text.split("\n");
+    if(arr[arr.length-1] == "" || arr[arr.length-1].length == 0)//最后多处一个换行符的情况
+      arr.pop();
+    var map = new Map();//保存所有Vertix的集合
+    var edges = new Array();//保存所有的Edge
+    var graph = 'digraph graphname{'
+    for(var i=0;i<arr.length;i++){
+      var temp = arr[i].split(",");
+      if(temp.length != 2){
+        alert("输入错误，请重新检查");
+        return;
+      }
+      var v0 = temp[0].trim().substring(1);
+      var v1 = temp[1].trim().substring(0, temp[1].trim().length-1);
+      var v00,v11;//两个Vertix对象
+      if(map.get(v0) == null){
+        v00 = new Vertex(v0);
+        map.set(v0, v00);
+      }else
+        v00 = map.get(v0);
+      if(map.get(v1) == null){
+        v11 = new Vertex(v1);
+        map.set(v1, v11);
+      }else
+        v11 = map.get(v1);
+      var edge = new Edge(v00, v11);
+      edges.push(edge);
+      graph = graph + v0 + '->' + v1 +';';
+    }
+    //画出拓扑排序前的图
+    graph += '}';
+    var viz = new Viz();
+    viz.renderSVGElement(graph)
+            .then(function(element) {
+              element.id = "svgBefore";
+              document.getElementById("BeforeCanvas").appendChild(element);
+            })
+            .catch(error => {
+              // Create a new Viz instance (@see Caveats page for more info)
+              viz = new Viz();
+              // Possibly display the error
+              console.error(error);
+            });
+    //Vertex数组
+    var vertexs = new Array();
+    var mapIter  = map.values();
+    var temp = mapIter.next().value;
+
+    while(temp != null){
+      vertexs.push(temp);
+      temp = mapIter.next().value;
+    }
+    //图
+    var g = new Graph(vertexs,edges);
+    var result_tree = new ResultTree();
+    g.topo_sort(g,result_tree.root);
+    var sort_canvas = document.getElementById('SortCanvas');
+    g.draw_results(sort_canvas);
+
+
+    //输出拓扑排序后的图
+    // viz = new Viz();
+    // var i=0;
+    // var sort_graph = 'digraph graphname{'
+    // if(g.sort_result.last_key!=-1){
+    //     for (var key in g.sort_result) {
+    //         if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
+    //             var element = g.sort_result[key];
+    //             for( i=0;i<element.length;i++)
+    //             {
+    //                 console.log('test'+i+element[i].name);
+
+    //                 if(i+1<element.length)
+    //                 {
+    //                     sort_graph+=element[i].name+'->'+element[i+1].name+';';
+    //                 }
+
+    //             }
+
+    //         }
+    //     }
+
+
+    //     sort_graph+='}';
+    //     console.log(sort_graph);
+    //     viz.renderSVGElement(sort_graph)
+    //         .then(function(element) {
+    //             element.id = "svgSort";
+    //             document.getElementById("SortCanvas").appendChild(element);
+    //         })
+    //         .catch(error => {
+    //             // Create a new Viz instance (@see Caveats page for more info)
+    //             viz = new Viz();
+    //             // Possibly display the error
+    //             console.error(error);
+    //         });
+    // }
+
+  }
+</script>
+<script type="text/javascript">
+  function change(){
+    var svgXml = $('#SortCanvas').html();
+    var image = new Image();
+    image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+    var canvas = document.createElement('canvas');  //准备空画布
+    canvas.width = $('.svg-wrap svg').width();
+    canvas.height = $('.svg-wrap svg').height();
+    var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
+    context.drawImage(image, 0, 0);
+    var a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
+    a.download = "MapByMathArtSys";  //设定下载名称
+    a.click(); //点击触发下载
+  }
+</script>
+</body>
 </html>
