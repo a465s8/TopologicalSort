@@ -105,13 +105,13 @@
     document.getElementById("bt").onclick = function(){
         //清空旧svg
         var body1 = document.getElementById("BeforeCanvas");
-        var body2 = document.getElementById("SortCanvas")
+        //var body2 = document.getElementById("SortCanvas")
         var svg = document.getElementById("svgBefore");
-        var svgs=document.getElementById("svgSort");
+        //var svgs=document.getElementById("svgSort");
         if(svg != null)
         {
             body1.removeChild(svg);
-            $("#SortCanvas").empty();
+            //$("#SortCanvas").empty();
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
