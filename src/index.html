@@ -170,47 +170,48 @@
         //图
         var g = new Graph(vertexs,edges);
         var result_tree = new ResultTree();
-        g.topo_sort(g,t.root);
-        console.log(g.sort_result);//打印排序后的结果
+        g.topo_sort(g,result_tree.root);
+        var sort_canvas = document.getElementById('SortCanvas');
+        g.draw_results(sort_canvas);
 
 
         //输出拓扑排序后的图
-        viz = new Viz();
-        var i=0;
-        var sort_graph = 'digraph graphname{'
-        if(g.sort_result.last_key!=-1){
-            for (var key in g.sort_result) {
-                if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
-                    var element = g.sort_result[key];
-                    for( i=0;i<element.length;i++)
-                    {
-                        console.log('test'+i+element[i].name);
+        // viz = new Viz();
+        // var i=0;
+        // var sort_graph = 'digraph graphname{'
+        // if(g.sort_result.last_key!=-1){
+        //     for (var key in g.sort_result) {
+        //         if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
+        //             var element = g.sort_result[key];
+        //             for( i=0;i<element.length;i++)
+        //             {
+        //                 console.log('test'+i+element[i].name);
 
-                        if(i+1<element.length)
-                        {
-                            sort_graph+=element[i].name+'->'+element[i+1].name+';';
-                        }
+        //                 if(i+1<element.length)
+        //                 {
+        //                     sort_graph+=element[i].name+'->'+element[i+1].name+';';
+        //                 }
 
-                    }
+        //             }
 
-                }
-            }
+        //         }
+        //     }
 
 
-            sort_graph+='}';
-            console.log(sort_graph);
-            viz.renderSVGElement(sort_graph)
-                .then(function(element) {
-                    element.id = "svgSort";
-                    document.getElementById("SortCanvas").appendChild(element);
-                })
-                .catch(error => {
-                    // Create a new Viz instance (@see Caveats page for more info)
-                    viz = new Viz();
-                    // Possibly display the error
-                    console.error(error);
-                });
-        }
+        //     sort_graph+='}';
+        //     console.log(sort_graph);
+        //     viz.renderSVGElement(sort_graph)
+        //         .then(function(element) {
+        //             element.id = "svgSort";
+        //             document.getElementById("SortCanvas").appendChild(element);
+        //         })
+        //         .catch(error => {
+        //             // Create a new Viz instance (@see Caveats page for more info)
+        //             viz = new Viz();
+        //             // Possibly display the error
+        //             console.error(error);
+        //         });
+        // }
 
     }
 </script>
