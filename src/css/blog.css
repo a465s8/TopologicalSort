@@ -1,0 +1,67 @@
+.navbar{
+	height: 40px;
+}
+body{
+	background: #ebebeb;
+}
+a {
+	text-decoration: none;
+	color: black;
+ }
+a:hover{
+	text-decoration: none;
+	color:#0033DD;
+}
+.header{
+	margin-top: 50px;
+	
+	width: 100%;
+	height: 400px;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding-top: 160px;
+}
+
+.panel{
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 0px;
+	
+}
+.panel1{
+	margin-top: 95px;
+	margin-bottom: 20px;
+	padding: 0px;
+	background-color:#fff;
+     filter: Alpha(Opacity=50); /*IE*/
+     -moz-opacity: 0.9; /*FF*/
+     opacity: 0.9;
+	box-shadow: 0px 1px 8px 1.5px rgba(0, 0, 0, .35), 0px 20px 70px 8px rgba(0, 0, 0, 0.25);
+}
+.span1{
+	margin-top: 25px;
+}
+.span1 li{
+	margin-left: 15px;
+}
+.page{
+	margin-left: 350px;
+}
+.table{
+	background: #fff;
+}
+.article li{
+	margin-top: 10px;
+}
+footer{
+	width: 100%;
+	height: 40px;
+	background-color: #121212;
+	text-align: center;
+	
+}
+footer a{
+	line-height: 40px;
+   margin-left: 50px;
+
+}
