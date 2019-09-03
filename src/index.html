@@ -7,6 +7,7 @@
     <title>课程编制系统</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/jumbotron.css" rel="stylesheet">
+	<script  src="./js/jquery-2.2.4.js"></script>
 </head>
 
 
@@ -54,8 +55,9 @@
             </div>
         </div>
         <div class="col-md-4">
+			<h3>课程安排图</h3>
             <div id="SortCanvas">
-                <h3>课程安排图</h3>
+                
             </div>
         </div>
         <div class="col-md-4">
@@ -84,10 +86,7 @@
 <!-- <script src="./html2canvas.js"></script>
 <script  src="./canvas2image.js"></script>
 <script  src="./base64.js"></script> -->
-<script src="./js/svgToPng.js"></script>
-<script src="./js/index.js"></script>
-<script src="./js/viz.js"></script>
-<script src="./js/full.render.js"></script>
+
 <script type="text/javascript">
     //js 读取txt文件
     function openFile(event) {
@@ -106,13 +105,13 @@
     document.getElementById("bt").onclick = function(){
         //清空旧svg
         var body1 = document.getElementById("BeforeCanvas");
-        var body2 = document.getElementById("SortCanvas")
+        //var body2 = document.getElementById("SortCanvas")
         var svg = document.getElementById("svgBefore");
-        var svgs=document.getElementById("svgSort");
+        //var svgs=document.getElementById("svgSort");
         if(svg != null)
         {
             body1.removeChild(svg);
-            body2.removeChild(svgs);
+            //$("#SortCanvas").empty();
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
@@ -215,9 +214,14 @@
 
     }
 </script>
-<script type="text/javascript">
+<script src="./js/svgToPng.js"></script>
+	<script src="./js/index.js"></script>
+	<script src="./js/viz.js"></script>
+	<script src="./js/full.render.js"></script>
+	<script type="text/javascript">
     function change(){
-        var svgXml = $('#SortCanvas').html();
+	    console.log("OUTPUT TEST");
+        var svgXml = $("#SortCanvas").html();
         var image = new Image();
         image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
         var canvas = document.createElement('canvas');  //准备空画布
