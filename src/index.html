@@ -13,10 +13,8 @@
 
 <body id="body" class="svg-wrap">
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container" style="text-align: center">
         <div class="navbar-header">
-
-
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -29,18 +27,23 @@
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron" >
-    <div class="container" >
-
-
-
+    <div class="container" style="text-align: center">
         <textarea id="ta" style="width:400px;height:180px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
+        <!-- <div>
+            <input  value="确认" type="button"/>
+            <button  onclick='openFile(event)' value='导入文件'/>
+            <button onclick="change()">change</button>
+        </div> -->
         <br>
-        <div>
-            <div style="width:100px;;margin:0;float:left;"><input id="bt" value="确认" type="button"/></div>
-            <div style="width:120px;padding:0;margin:0;float:left;"><input type='file' accept='text/plain' onchange='openFile(event)' value='导入文件'/></div>
-
-            <div style="width:160px;padding:0;margin:0;float:left;"><button onclick="change()">change</button></div>
-    </div>
+        <div class="btn-group">
+            <button id="bt" type="button" class="btn btn-default">确认</button>
+            <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>
+            <button class="btn btn-default" onclick="clickInput()">导入文件</button>
+            <!-- <a class="btn btn-default"> <input style="opacity: 0;" type='file' accept='text/plain' onchange='openFile(event)'/>导入文件 </a> -->
+            
+            <!-- <button type="file" onclick='openFile(event)' value='导入文件' class="btn btn-default">导入文件</button> -->
+            <!-- <button type="button" class="btn btn-default" onclick="change()">change</button> -->
+        </div>
 
     </div>
 </div>
@@ -89,6 +92,10 @@
 <script src="./js/viz.js"></script>
 <script src="./js/full.render.js"></script>
 <script type="text/javascript">
+    function clickInput(){
+        var input = document.getElementById('input');
+        input.click();
+    }
     //js 读取txt文件
     function openFile(event) {
         var input = event.target;
