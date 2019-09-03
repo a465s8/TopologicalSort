@@ -30,9 +30,6 @@ function ResultTree(){
     this.root = new ResultTreeNode(root_vertex);
     this.root.father = null;
 }
-ResultTree.prototype.get_sort_result_list = function rec(graph_sort_result,tree_root){
-   
-}
 
   //图
 function Graph(vertexs,edges){
@@ -50,8 +47,8 @@ function Graph(vertexs,edges){
     this.sort_result = {last_key:0,0:[]};
 }
 Graph.prototype.set_in_degree_o_vertexs=function(node){
-    debugger
-    var tepm_node = node;
+    var flag = true;
+    var remove_count = 0;
     while(node.father!=null){
         node.vertex.removed = true;
         node.vertex.adj_vexs.forEach(function(element){
@@ -70,12 +67,23 @@ Graph.prototype.set_in_degree_o_vertexs=function(node){
 
     this.vertexs.forEach(function(element){
         if(element.removed){
+            remove_count +=1;
             element.removed = false;
             element.adj_vexs.forEach(function(element){
                 element.in_degree += 1;
             })
         }
     })
+    if(remove_count<this.vertexs.length && this.in_degree_0_vertexs.length>0){
+        flag = false;
+    }
+    return flag;
+}
+Graph.prototype.update_result = function rec(last_result,node){
+    if(node.father!=null){
+        last_result.unshift(node.vertex);
+        rec(last_result,node.father);
+    }
 }
 
 Graph.prototype.topo_sort = function rec(context,node){
@@ -86,16 +94,16 @@ Graph.prototype.topo_sort = function rec(context,node){
             var vertex = context.in_degree_0_vertexs[i];
             var child = new ResultTreeNode(vertex);
             child.father = node;
-            // var child = new Vertex(element.name);
-            // child.father = node;
-            // element.adj_vexs.forEach(function(element){
-            //     child.adj_vexs.push(element);
-            // })
             node.children.push(child);
         }
         node.children.forEach(function(element){
             rec(context,element);
         })
+    }else{
+        var last_key = context.sort_result.last_key;
+        context.sort_result[last_key] = [];
+        context.update_result(context.sort_result[last_key],node);
+        context.sort_result.last_key += 1;
     }
 }
 function main(){
@@ -103,10 +111,13 @@ function main(){
     var v2 = new Vertex('V2');
     var v3 = new Vertex('V3');
     var v4 = new Vertex('V4');
+    // var v5 = new Vertex('V5');
   
     var e1 = new Edge(v1,v2);
     var e2 = new Edge(v1,v3);
     var e3 = new Edge(v1,v4);
+    // var e4 = new Edge(v2,v5);  
+    // var e5 = new Edge(v3,v4);
  
 
     var vertexs = [v1,v2,v3,v4]
@@ -114,7 +125,7 @@ function main(){
     var g = new Graph(vertexs,edges);
     var t = new ResultTree();
     g.topo_sort(g,t.root);
-    t.get_sort_result_list(g.sort_result,t.root);
-    console.log(t.root);
+    // t.get_sort_result_list(g.sort_result,t.root);
+    console.log(g.sort_result);
 }
-main();
+// main();

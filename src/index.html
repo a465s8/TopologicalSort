@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>课程编制系统</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="jumbotron.css" rel="stylesheet">
-    <script type="text/javascript" src="./html2canvas.js"></script>
-    <script type="text/javascript" src="./canvas2image.js"></script>
-    <script type="text/javascript" src="./base64.js"></script>
-    <script src="svgToPng.js"></script>
-
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/jumbotron.css" rel="stylesheet">
 </head>
 
 
@@ -88,10 +81,13 @@
 
 
 </body>
-<script src="./index.js"></script>
-<script src="./viz.js"></script>
-<script src="./full.render.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="./html2canvas.js"></script>
+<script  src="./canvas2image.js"></script>
+<script  src="./base64.js"></script> -->
+<script src="./js/svgToPng.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/viz.js"></script>
+<script src="./js/full.render.js"></script>
 <script type="text/javascript">
     //js 读取txt文件
     function openFile(event) {
@@ -171,9 +167,8 @@
         }
         //图
         var g = new Graph(vertexs,edges);
-        g.init();
-        g.topo_sort(g);
-        g.output();
+        var result_tree = new ResultTree();
+        g.topo_sort(g,t.root);
         console.log(g.sort_result);//打印排序后的结果
 
 
