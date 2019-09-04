@@ -22,33 +22,10 @@
   </head>
   <body>
     
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-      
-        <div class="navbar-header">
-          <p class="navbar-brand">课程编制系统</p>
-          <button class="navbar-toggle cpllapsed" data-toggle = 'collapse' data-target = '#mynavbar'>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-
-        <div id="mynavbar" class="collapse navbar-collapse ">
-          <ul class="nav navbar-nav ">
-            
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            
-          </ul>
-
-          <form class = "navbar-form navbar-right">
-            
-          </form>
-        </div>
-      </nav>
       <!--网页头部图片 介绍-->
       <div class="header">
+          <h5 style="text-align: center; color: #333; background-color: #fff;border-color: #ccc;">课程编制系统</h5>
+
           <div class="row">
             <div class="col-md-6 col-md-offset-3">
               <div class="panel panel-default panel1">    
@@ -57,13 +34,12 @@
 
         <textarea id="ta" style="width:400px;height:180px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
         <br>
-        <div>
-            <div style="width:100px;;margin-left: 100px;float:left;"><input id="bt" value="确认" type="button" class="btn btn-primary"class="btn btn-primary"/></div>
-
-            <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>  <button class="btn btn-primary" onclick="clickInput()">导入文件</button>
-
-           
-    </div>
+        
+</div>
+<div>
+  <input id="bt" value="确认" type="button" class="btn btn-default"class="btn btn-default"/>
+  <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>  
+  <button class="btn btn-default" onclick="clickInput()">导入文件</button>
 </div>
                         
             </div>
@@ -83,10 +59,159 @@
         </div>
       </div>
   
-       <!--分页-->
-    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   </body>
+
+<script type="text/javascript">
+  function clickInput(){
+      var input = document.getElementById('input');
+      input.click();
+  }
+  //js 读取txt文件
+  function openFile(event) {
+      var input = event.target;
+      var reader = new FileReader();
+      reader.onload = function() {
+          if(reader.result) {
+              //显示文件内容
+              console.log(reader.result);
+              document.getElementById("ta").value = reader.result;
+          }
+      };
+      reader.readAsText(input.files[0]);
+  };
+  //确认按钮点击事件
+  document.getElementById("bt").onclick = function(){
+      //清空旧svg
+      var body1 = document.getElementById("BeforeCanvas");
+      //var body2 = document.getElementById("SortCanvas")
+      var svg = document.getElementById("svgBefore");
+      //var svgs=document.getElementById("svgSort");
+      if(svg != null)
+      {
+          body1.removeChild(svg);
+          //$("#SortCanvas").empty();
+      }
+      var text = document.getElementById("ta").value;
+      var arr = text.split("\n");
+      if(arr[arr.length-1] == "" || arr[arr.length-1].length == 0)//最后多处一个换行符的情况
+          arr.pop();
+      var map = new Map();//保存所有Vertix的集合
+      var edges = new Array();//保存所有的Edge
+      var graph = 'digraph graphname{'
+      for(var i=0;i<arr.length;i++){
+          var temp = arr[i].split(",");
+          if(temp.length != 2){
+              alert("输入错误，请重新检查");
+              return;
+          }
+          var v0 = temp[0].trim().substring(1);
+          var v1 = temp[1].trim().substring(0, temp[1].trim().length-1);
+          var v00,v11;//两个Vertix对象
+          if(map.get(v0) == null){
+              v00 = new Vertex(v0);
+              map.set(v0, v00);
+          }else
+              v00 = map.get(v0);
+          if(map.get(v1) == null){
+              v11 = new Vertex(v1);
+              map.set(v1, v11);
+          }else
+              v11 = map.get(v1);
+          var edge = new Edge(v00, v11);
+          edges.push(edge);
+          graph = graph + v0 + '->' + v1 +';';
+      }
+      //画出拓扑排序前的图
+      graph += '}';
+      var viz = new Viz();
+      viz.renderSVGElement(graph)
+          .then(function(element) {
+              element.id = "svgBefore";
+              document.getElementById("BeforeCanvas").appendChild(element);
+          })
+          .catch(error => {
+              // Create a new Viz instance (@see Caveats page for more info)
+              viz = new Viz();
+              // Possibly display the error
+              console.error(error);
+          });
+      //Vertex数组
+      var vertexs = new Array();
+      var mapIter  = map.values();
+      var temp = mapIter.next().value;
+
+      while(temp != null){
+          vertexs.push(temp);
+          temp = mapIter.next().value;
+      }
+      //图
+      var g = new Graph(vertexs,edges);
+      var result_tree = new ResultTree();
+      g.topo_sort(g,result_tree.root);
+      var sort_canvas = document.getElementById('SortCanvas');
+      g.draw_results(sort_canvas);
+
+
+      //输出拓扑排序后的图
+      // viz = new Viz();
+      // var i=0;
+      // var sort_graph = 'digraph graphname{'
+      // if(g.sort_result.last_key!=-1){
+      //     for (var key in g.sort_result) {
+      //         if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
+      //             var element = g.sort_result[key];
+      //             for( i=0;i<element.length;i++)
+      //             {
+      //                 console.log('test'+i+element[i].name);
+
+      //                 if(i+1<element.length)
+      //                 {
+      //                     sort_graph+=element[i].name+'->'+element[i+1].name+';';
+      //                 }
+
+      //             }
+
+      //         }
+      //     }
+
+
+      //     sort_graph+='}';
+      //     console.log(sort_graph);
+      //     viz.renderSVGElement(sort_graph)
+      //         .then(function(element) {
+      //             element.id = "svgSort";
+      //             document.getElementById("SortCanvas").appendChild(element);
+      //         })
+      //         .catch(error => {
+      //             // Create a new Viz instance (@see Caveats page for more info)
+      //             viz = new Viz();
+      //             // Possibly display the error
+      //             console.error(error);
+      //         });
+      // }
+
+  }
+</script>
+<script src="./js/svgToPng.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/viz.js"></script>
+<script src="./js/full.render.js"></script>
+<script type="text/javascript">
+  function change(){
+    console.log("OUTPUT TEST");
+      var svgXml = $("#SortCanvas").html();
+      var image = new Image();
+      image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+      var canvas = document.createElement('canvas');  //准备空画布
+      canvas.width = $('.svg-wrap svg').width();
+      canvas.height = $('.svg-wrap svg').height();
+      var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
+      context.drawImage(image, 0, 0);
+      var a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
+      a.download = "MapByMathArtSys";  //设定下载名称
+      a.click(); //点击触发下载
+  }
+</script>
 </html>
