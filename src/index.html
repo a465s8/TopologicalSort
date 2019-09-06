@@ -7,11 +7,10 @@
     <title>课程编制系统</title>
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/jumbotron.css" rel="stylesheet">
-<<<<<<< HEAD
-
-=======
+	<link rel="stylesheet" href="./layui/css/layui.css" media="all">
 	<script  src="./js/jquery-2.2.4.js"></script>
->>>>>>> 80a65457bf4f50c8ac7d0e1a52422d573e97ebcd
+	<script src="./layui/layui.js"></script>
+
 </head>
 
 
@@ -40,7 +39,7 @@
             <button onclick="change()">change</button>
         </div> -->
         <br>
-<<<<<<< HEAD
+
         <div class="btn-group">
             <button id="bt" type="button" class="btn btn-default">确认</button>
             <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>
@@ -50,13 +49,13 @@
             <!-- <button type="file" onclick='openFile(event)' value='导入文件' class="btn btn-default">导入文件</button> -->
             <!-- <button type="button" class="btn btn-default" onclick="change()">change</button> -->
         </div>
-=======
+
         <div>
             <div style="width:100px;;margin:0;float:left;"><button id="bt" value="确认" type="button">生成</button></div>
             <div style="width:120px;padding:0;margin:0;float:left;"><button onclick="openFile(event)" >导入文件</button></div>
             <div style="width:160px;padding:0;margin:0;float:left;"><button onclick="change()">change</button></div>
     </div>
->>>>>>> 90fd27b7cfa35eb525fe7050152622aa803ba69d
+
 
     </div>
 </div>
@@ -69,17 +68,17 @@
                 <h3>课程关系图</h3>
             </div>
         </div>
-        <div class="col-md-4">
-			<h3>课程安排图</h3>
-            <div id="SortCanvas">
-                
-            </div>
-        </div>
-        <div class="col-md-4">
+	
 
+
+        <div class="col-md-4">
+		<div class="layui-carousel" id="test1">
+		<div carousel-item id="SortCanvas">
+    
+		</div>
+		</div>
         </div>
     </div>
-
 
 
 
@@ -94,9 +93,9 @@
 
 
 </body>
-<!-- <script src="./html2canvas.js"></script>
-<script  src="./canvas2image.js"></script>
-<script  src="./base64.js"></script> -->
+<script src="./js/html2canvas.js"></script>
+<script  src="./js/canvas2image.js"></script>
+<script  src="./js/base64.js"></script> 
 
 <script type="text/javascript">
     function clickInput(){
@@ -126,7 +125,7 @@
         if(svg != null)
         {
             body1.removeChild(svg);
-            //$("#SortCanvas").empty();
+            $("#SortCanvas").empty();
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
@@ -226,28 +225,69 @@
         //             console.error(error);
         //         });
         // }
-
+	TEST();
     }
 </script>
 <script src="./js/svgToPng.js"></script>
 	<script src="./js/index.js"></script>
 	<script src="./js/viz.js"></script>
 	<script src="./js/full.render.js"></script>
+	<script type="text/javascript" src="./js/FileSaver.js"></script>
 	<script type="text/javascript">
-    function change(){
-	    console.log("OUTPUT TEST");
-        var svgXml = $("#SortCanvas").html();
-        var image = new Image();
-        image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
-        var canvas = document.createElement('canvas');  //准备空画布
-        canvas.width = $('.svg-wrap svg').width();
-        canvas.height = $('.svg-wrap svg').height();
-        var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
-        context.drawImage(image, 0, 0);
-        var a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
-        a.download = "MapByMathArtSys";  //设定下载名称
-        a.click(); //点击触发下载
-    }
+    function change(Id){
+		console.log(Id);
+	    html2canvas(document.getElementById(Id)).then(canvas => {
+          //将canvas内容保存为文件并下载
+          canvas.toBlob(function(blob) {
+             saveAs(blob, "hangge.png");
+          });
+        });
+      } 
+    
+</script>
+<script>
+function TEST()
+{
+
+layui.use('carousel', function() {
+
+var carousel = layui.carousel;
+
+var ins = carousel.render({
+
+elem: '#test1',
+
+width: 	'600px', //设置容器宽度
+
+height: 	'600px',
+
+arrow: 'always', //始终显示箭头
+
+//,anim: 'updown' //切换动画方式
+
+autoplay: false
+
+});
+
+//重置轮播
+
+ins.reload({
+
+elem: '#test1',
+
+width: 	'600px', //设置容器宽度
+
+height: 	'600px',
+
+arrow: 'always', //始终显示箭头
+
+//,anim: 'updown' //切换动画方式
+
+autoplay: false
+
+});
+
+});
+}
 </script>
 </html>
