@@ -119,9 +119,16 @@ Graph.prototype.draw_results = function(element){
             viz.renderSVGElement(graph_str)
             .then(function(graph) {
                 var div = document.createElement('div');
+				div.id="sort_"+key;
                 // div.style.border='2px dashed black';
-                div.style = 'height: 150px;width: 150px; border: 1px solid #777;'
-                div.appendChild(graph)
+               // div.style = 'height: 150px;width: 150px; border: 1px solid #777;';
+                div.appendChild(graph);
+				var button=document.createElement("Button");
+				button.name="sort_"+key;
+				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
+				button.style='height:150px;width:150px;'
+				button.value="输出";
+				div.appendChild(button);
                 element.appendChild(div);
             })
             .catch(error => {
