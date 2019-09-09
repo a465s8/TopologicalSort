@@ -126,9 +126,9 @@ Graph.prototype.draw_results = function(element){
 				var button=document.createElement("Button");
 				button.name="sort_"+key;
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
-				button.style='height:150px;width:150px;'
-				button.value="输出";
-				div.appendChild(button);
+				// button.style='height:150px;width:150px;'
+				button.innerText="导出";
+                div.appendChild(button);
                 element.appendChild(div);
             })
             .catch(error => {
