@@ -18,7 +18,9 @@
   <script src="./js/ie-emulation-modes-warning.js"></script>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
+<link rel="stylesheet" href="./layui/css/layui.css" >
+<script  src="./js/jquery-2.2.4.js"></script>
+	<script src="./layui/layui.js"></script>
 </head>
 
 <body>
@@ -54,22 +56,28 @@
         <h3>课程关系图</h3>
       </div>
     </div>
+<div class="col-md-6">
+		<h3>课程安排图</h3>
+		<div class="layui-carousel" id="test1">
+		
+		<div carousel-item id="SortCanvas" >
+    
+		</div>
+		</div>
+        </div>
 
-    <div class="col-lg-6">
-      <div id="SortCanvas">
-        <h3>课程安排图</h3>
-      </div>
-    </div>
+</div>
+ 
   </div>
-
-
-
-</div> <!-- /container -->
+<br>
+ <!-- /container -->
 <footer>
   <hr>
   <p>@The most handsome group of STU</p>
 </footer>
-
+<script src="./js/html2canvas.js"></script>
+<script  src="./js/canvas2image.js"></script>
+<script  src="./js/base64.js"></script> 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="./js/ie10-viewport-bug-workaround.js"></script>
 <script src="./js/svgToPng.js"></script>
@@ -95,13 +103,13 @@
   document.getElementById("bt").onclick = function(){
     //清空旧svg
     var body1 = document.getElementById("BeforeCanvas");
-    var body2 = document.getElementById("SortCanvas")
+   // var body2 = document.getElementById("SortCanvas")
     var svg = document.getElementById("svgBefore");
-    var svgs=document.getElementById("svgSort");
+  //  var svgs=document.getElementById("svgSort");
     if(svg != null)
     {
       body1.removeChild(svg);
-      body2.removeChild(svgs);
+  //    body2.removeChild(svgs);
     }
     var text = document.getElementById("ta").value;
     var arr = text.split("\n");
@@ -201,28 +209,68 @@
     //             console.error(error);
     //         });
     // }
-
+	TEST();
   }
+ 
 </script>
+
 <script type="text/javascript">
   function clickInput(){
     var input = document.getElementById('input');
     input.click();
   }
-  function change(){
-    var svgXml = $('#SortCanvas').html();
-    var image = new Image();
-    image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
-    var canvas = document.createElement('canvas');  //准备空画布
-    canvas.width = $('.svg-wrap svg').width();
-    canvas.height = $('.svg-wrap svg').height();
-    var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
-    context.drawImage(image, 0, 0);
-    var a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
-    a.download = "MapByMathArtSys";  //设定下载名称
-    a.click(); //点击触发下载
-  }
+  
+</script>
+<script src="./js/svgToPng.js"></script>
+	<script src="./js/index.js"></script>
+	<script src="./js/viz.js"></script>
+	<script src="./js/full.render.js"></script>
+	<script type="text/javascript" src="./js/FileSaver.js"></script>
+	<script type="text/javascript">
+    function change(Id){
+		console.log(Id);
+	    html2canvas(document.getElementById(Id)).then(canvas => {
+          //将canvas内容保存为文件并下载
+          canvas.toBlob(function(blob) {
+             saveAs(blob, "hangge.png");
+          });
+        });
+      } 
+    
+</script>
+<script>
+function TEST()
+{
+console.log("轮播test");
+
+layui.use('carousel', function() {
+
+
+var carousel = layui.carousel;
+
+
+var ins = carousel.render({
+
+elem: '#test1',
+
+width: 	'600px', //设置容器宽度
+
+height: '600px',
+
+arrow: 'always', //始终显示箭头
+
+//,anim: 'updown' //切换动画方式
+
+autoplay: false
+
+});
+console.log("RESET TEST");
+//重置轮播
+
+
+
+});
+}
 </script>
 </body>
 </html>
