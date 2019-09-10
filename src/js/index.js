@@ -120,6 +120,7 @@ Graph.prototype.draw_results = function(element){
             .then(function(graph) {
                 var div = document.createElement('div');
 				div.id="sort_"+key;
+		    div.align="center";
                 // div.style.border='2px dashed black';
                // div.style = 'height: 150px;width: 150px; border: 1px solid #777;';
                 div.appendChild(graph);
