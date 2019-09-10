@@ -39,7 +39,9 @@
       <br>
       <div>
        <button id="bt" value="确认" type="button" class="btn btn-blue">生成</button>
-        <button onclick="openFile(event)" class="btn btn-blue" style="text-align: center">导入文件</button>
+
+        <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>
+        <button class="btn btn-blue" style="text-align: center" onclick="clickInput()" >导入文件</button>
       <button onclick="change()" class="btn btn-blue">change</button>
       </div>
 
@@ -203,6 +205,10 @@
   }
 </script>
 <script type="text/javascript">
+  function clickInput(){
+    var input = document.getElementById('input');
+    input.click();
+  }
   function change(){
     var svgXml = $('#SortCanvas').html();
     var image = new Image();
