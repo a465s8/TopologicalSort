@@ -118,14 +118,18 @@ Graph.prototype.draw_results = function(element){
             var viz = new Viz();
             viz.renderSVGElement(graph_str)
             .then(function(graph) {
+                var graphindex=0;
+				 graphindex="_"+JSON.parse(JSON.stringify(key));
                 var div = document.createElement('div');
-				div.id="sort_"+key;
-		    div.align="center";
+				//div.id="sort"+""+graphindex+"";
+				graph.id="sort"+""+graphindex+"";
+				
+				div.align="center";
                 // div.style.border='2px dashed black';
                // div.style = 'height: 150px;width: 150px; border: 1px solid #777;';
                 div.appendChild(graph);
 				var button=document.createElement("Button");
-				button.name="sort_"+key;
+				button.name="sort"+""+graphindex+"";
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
 				// button.style='height:150px;width:150px;'
 				button.innerText="导出";
