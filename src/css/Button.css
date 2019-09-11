@@ -38,6 +38,12 @@ body {
 	width: 90px;
 	opacity: 20%;
 }
+.btn-dark {
+	background-color:darkgray;
+	height: 50px;
+	width: 90px;
+	opacity: 20%;
+}
 
 
 
