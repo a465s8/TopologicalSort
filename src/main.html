@@ -72,7 +72,7 @@
                 </div>
                  <button onclick="change('svgBefore')" class="btn btn-dark"><span style="color: black">导出关系图</span></button>
                 <h3>课程安排图</h3>
-              <div class="layui-carousel" id="test1">
+              <div class="layui-carousel" id="test1" overflow="scroll">
                 <div carousel-item id="SortCanvas" ></div>
               </div>
             </div>
@@ -161,6 +161,7 @@
     //画出拓扑排序前的图
     graph += '}';
     var viz = new Viz();
+    console.log(graph)
     viz.renderSVGElement(graph)
             .then(function(element) {
               element.id = "svgBefore";
@@ -181,18 +182,19 @@
       vertexs.push(temp);
       temp = mapIter.next().value;
     }
-    //图
-    var g = new Graph(vertexs,edges);
-    var result_tree = new ResultTree();
-    g.topo_sort(g,result_tree.root);
+    
     var max = document.getElementById('resultNum').value;
-    console.log(max)
     if(max===null||max===undefined || max===''){
       max = 10;
     }else if(max<=0){
       window.alert('输出结果应该为正整数');
       return;
     }
+    var g = new Graph(vertexs,edges);
+    var result_tree = new ResultTree();
+    console.log(max)
+    g.topo_sort(g,result_tree.root,max);
+
     var sort_canvas = document.getElementById('SortCanvas');
     if(!g.draw_results(sort_canvas,max)){
       window.alert("输入的不是有向无环图！");
@@ -200,49 +202,9 @@
     }else{
       var inputArea = document.getElementById('inputArea');
       inputArea.style='display:none';
-
       var restultArea = document.getElementById('restultArea');
       restultArea.style='';
     }
-
-
-    //输出拓扑排序后的图
-    // viz = new Viz();
-    // var i=0;
-    // var sort_graph = 'digraph graphname{'
-    // if(g.sort_result.last_key!=-1){
-    //     for (var key in g.sort_result) {
-    //         if (g.sort_result.hasOwnProperty(key) && key!='last_key') {
-    //             var element = g.sort_result[key];
-    //             for( i=0;i<element.length;i++)
-    //             {
-    //                 console.log('test'+i+element[i].name);
-
-    //                 if(i+1<element.length)
-    //                 {
-    //                     sort_graph+=element[i].name+'->'+element[i+1].name+';';
-    //                 }
-
-    //             }
-
-    //         }
-    //     }
-
-
-    //     sort_graph+='}';
-    //     console.log(sort_graph);
-    //     viz.renderSVGElement(sort_graph)
-    //         .then(function(element) {
-    //             element.id = "svgSort";
-    //             document.getElementById("SortCanvas").appendChild(element);
-    //         })
-    //         .catch(error => {
-    //             // Create a new Viz instance (@see Caveats page for more info)
-    //             viz = new Viz();
-    //             // Possibly display the error
-    //             console.error(error);
-    //         });
-    // }
 	TEST();
   }
  
@@ -299,7 +261,7 @@ elem: '#test1',
 
 width: 	'600px', //设置容器宽度
 
-height: '600px',
+height: '2400px',
 
 arrow: 'always', //始终显示箭头
 
