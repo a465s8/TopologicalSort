@@ -131,7 +131,7 @@ Graph.prototype.draw_results = function(element){
 				var button=document.createElement("Button");
 				button.name="sort"+""+graphindex+"";
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
-                 //button.style='display:block;height: 10px;width: 20px';
+                button.style='display:block;';
 				button.innerText="导出";
                 div.appendChild(button);
                 element.appendChild(div);
