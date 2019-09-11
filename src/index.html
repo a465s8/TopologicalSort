@@ -31,7 +31,7 @@
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron" >
-    <div class="container" style="text-align: center">
+    <div id="inputText" class="container" 　 style="text-align: center">
         <textarea id="ta" style="width:400px;height:180px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
         <!-- <div>
             <input  value="确认" type="button"/>
@@ -42,6 +42,7 @@
 
         <div class="btn-group">
             <button id="bt" type="button" class="btn btn-default">确认</button>
+            <!-- <button id="reset" type="button" class="btn btn-default">刷新</button> -->
             <input id="input" type='file' accept='text/plain' onclick='openFile(event)' value='导入文件' style="display: none"/>
             <button class="btn btn-default" onclick="clickInput()">导入文件</button>
             <!-- <a class="btn btn-default"> <input style="opacity: 0;" type='file' accept='text/plain' onchange='openFile(event)'/>导入文件 </a> -->
@@ -50,11 +51,11 @@
             <!-- <button type="button" class="btn btn-default" onclick="change()">change</button> -->
         </div>
 
-        <div>
+        <!-- <div>
             <div style="width:100px;;margin:0;float:left;"><button id="bt" value="确认" type="button">生成</button></div>
             <div style="width:120px;padding:0;margin:0;float:left;"><button onclick="openFile(event)" >导入文件</button></div>
             <div style="width:160px;padding:0;margin:0;float:left;"><button onclick="change()">change</button></div>
-    </div>
+    </div> -->
 
 
     </div>
@@ -72,11 +73,9 @@
 
 
         <div class="col-md-4">
-		<div class="layui-carousel" id="test1">
-		<div carousel-item id="SortCanvas">
-    
-		</div>
-		</div>
+            <div class="layui-carousel" id="test1" style="width: 62px; height: 260px;">
+                <div carousel-item id="SortCanvas"></div>
+            </div>
         </div>
     </div>
 
@@ -117,15 +116,21 @@
     };
     //确认按钮点击事件
     document.getElementById("bt").onclick = function(){
+        var fuck = document.getElementById("inputText");
+        fuck.style='display:none';
+        console.log(fuck);
         //清空旧svg
         var body1 = document.getElementById("BeforeCanvas");
         //var body2 = document.getElementById("SortCanvas")
         var svg = document.getElementById("svgBefore");
-        //var svgs=document.getElementById("svgSort");
+        var sort_canvas = document.getElementById("SortCanvas");
+    
+        var svgs=document.getElementById("svgSort");
         if(svg != null)
         {
             body1.removeChild(svg);
             $("#SortCanvas").empty();
+            console.log('empty')
         }
         var text = document.getElementById("ta").value;
         var arr = text.split("\n");
@@ -271,21 +276,7 @@ autoplay: false
 
 //重置轮播
 
-ins.reload({
 
-elem: '#test1',
-
-width: 	'600px', //设置容器宽度
-
-height: 	'600px',
-
-arrow: 'always', //始终显示箭头
-
-//,anim: 'updown' //切换动画方式
-
-autoplay: false
-
-});
 
 });
 }
