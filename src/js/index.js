@@ -106,20 +106,21 @@ Graph.prototype.topo_sort = function rec(context,node){
         context.sort_result.last_key += 1;
     }
 }
-Graph.prototype.draw_results = function(element){
+Graph.prototype.draw_results = function(element,max){
     if(this.sort_result.last_key!=-1){
-        for(var key = 0;key<this.sort_result.last_key;key++){
+        for(var key = 0;key<this.sort_result.last_key && key<max;key++){
             var graph_str =  'digraph graphname{' + this.sort_result[key][0].name; 
             for(var i=1;i<this.sort_result[key].length;i++){
                 graph_str = graph_str  + ' -> '+this.sort_result[key][i].name ;
             }
             graph_str += ';}';
-            console.log(graph_str);
+           // console.log(graph_str);
             var viz = new Viz();
             viz.renderSVGElement(graph_str)
             .then(function(graph) {
                 var div = document.createElement('div');
 				div.id="sort_"+key;
+		    div.align="center";
                 // div.style.border='2px dashed black';
                // div.style = 'height: 150px;width: 150px; border: 1px solid #777;';
                 div.appendChild(graph);
