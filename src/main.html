@@ -88,7 +88,7 @@
  <!-- /container -->
 <footer>
   <hr>
-  <center>@The most handsome group of STU</center>
+  <center><h13>@The most handsome group of STU</h></center>
 </footer>
 <script src="./js/html2canvas.js"></script>
 <script  src="./js/canvas2image.js"></script>
@@ -117,11 +117,6 @@
   };
   //确认按钮点击事件
   document.getElementById("bt").onclick = function(){
-    var inputArea = document.getElementById('inputArea');
-    inputArea.style='display:none';
-
-    var restultArea = document.getElementById('restultArea');
-    restultArea.style='';
 
     //清空旧svg
     var body1 = document.getElementById("BeforeCanvas");
@@ -199,7 +194,16 @@
       return;
     }
     var sort_canvas = document.getElementById('SortCanvas');
-    g.draw_results(sort_canvas,max);
+    if(!g.draw_results(sort_canvas,max)){
+      window.alert("输入的不是有向无环图！");
+      return;
+    }else{
+      var inputArea = document.getElementById('inputArea');
+      inputArea.style='display:none';
+
+      var restultArea = document.getElementById('restultArea');
+      restultArea.style='';
+    }
 
 
     //输出拓扑排序后的图

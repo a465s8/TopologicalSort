@@ -48,7 +48,7 @@ function Graph(vertexs,edges){
 }
 Graph.prototype.set_in_degree_o_vertexs=function(node){
     var flag = true;
-    var remove_count = 0;
+    var removed_count = 0;
     while(node.father!=null){
         node.vertex.removed = true;
         node.vertex.adj_vexs.forEach(function(element){
@@ -67,14 +67,14 @@ Graph.prototype.set_in_degree_o_vertexs=function(node){
 
     this.vertexs.forEach(function(element){
         if(element.removed){
-            remove_count +=1;
+            removed_count +=1;
             element.removed = false;
             element.adj_vexs.forEach(function(element){
                 element.in_degree += 1;
             })
         }
     })
-    if(remove_count<this.vertexs.length && this.in_degree_0_vertexs.length>0){
+    if(removed_count<this.vertexs.length && this.in_degree_0_vertexs.length===0){
         flag = false;
     }
     return flag;
@@ -88,27 +88,33 @@ Graph.prototype.update_result = function rec(last_result,node){
 
 Graph.prototype.topo_sort = function rec(context,node){
     
-    context.set_in_degree_o_vertexs(node);
-    if(context.in_degree_0_vertexs.length>0){
-        for(var i=0;i<context.in_degree_0_vertexs.length;i++){
-            var vertex = context.in_degree_0_vertexs[i];
-            var child = new ResultTreeNode(vertex);
-            child.father = node;
-            node.children.push(child);
+    var isDGA=context.set_in_degree_o_vertexs(node);
+    if(isDGA && context.sort_result.last_key!=-1){
+        if(context.in_degree_0_vertexs.length>0){
+            for(var i=0;i<context.in_degree_0_vertexs.length;i++){
+                var vertex = context.in_degree_0_vertexs[i];
+                var child = new ResultTreeNode(vertex);
+                child.father = node;
+                node.children.push(child);
+            }
+            node.children.forEach(function(element){
+                rec(context,element);
+            })
+        }else{
+            var last_key = context.sort_result.last_key;
+            context.sort_result[last_key] = [];
+            context.update_result(context.sort_result[last_key],node);
+            context.sort_result.last_key += 1;
         }
-        node.children.forEach(function(element){
-            rec(context,element);
-        })
     }else{
-        var last_key = context.sort_result.last_key;
-        context.sort_result[last_key] = [];
-        context.update_result(context.sort_result[last_key],node);
-        context.sort_result.last_key += 1;
+        context.sort_result.last_key = -1;
+        return;
     }
+    
 }
-Graph.prototype.draw_results = function(element){
+Graph.prototype.draw_results = function(element,max){
     if(this.sort_result.last_key!=-1){
-        for(let key = 0;key<this.sort_result.last_key;key++){
+        for(let key = 0;key<this.sort_result.last_key && key<max;key++){
             var graph_str =  'digraph graphname{' + this.sort_result[key][0].name; 
             for(var i=1;i<this.sort_result[key].length;i++){
                 graph_str = graph_str  + ' -> '+this.sort_result[key][i].name ;
@@ -141,6 +147,10 @@ Graph.prototype.draw_results = function(element){
                 console.error(error);
             });
         }
+        return true;
+    }else{
+        // window.alert('输入的不是有向n五环图');
+        return false;
     }
 }
 // function main(){
