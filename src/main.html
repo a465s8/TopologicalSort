@@ -40,9 +40,7 @@
       <textarea id="ta" style="width:500px;height:300px;resize: none" placeholder="请在此处输入课程顺序，例如<a,b>"></textarea>
       <br>
       <div>
-          <span class="btn btn-blue" style="text-align: center;text-decoration-color: black" >结果数量</span>
-          <input id="resultNum" class="btn btn-blue" placeholder="10">
-          <br>
+        
        <button id="bt" value="确认" type="button" class="btn btn-blue">生成</button>
 
         <input id="input" type='file' onclick="openFile(this)" accept='text/plain' value='导入文件' style="display: none"/>
@@ -51,6 +49,14 @@
       <!-- <button onclick="change()" class="btn btn-blue">change</button> -->
       </div>
 
+    </div>
+    <div style="padding: 100px 100px 10px;">
+        <form class="bs-example bs-example-form" role="form">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">最大结果数量</span>
+                <input id="resultNum"  type="text" class="form-control" placeholder="10">
+            </div>
+        </form>
     </div>
   </div>
 
