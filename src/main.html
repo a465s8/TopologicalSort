@@ -249,16 +249,25 @@
 	<script src="./js/full.render.js"></script>
 	<script type="text/javascript" src="./js/FileSaver.js"></script>
 	<script type="text/javascript">
-    function change(Id){
+ function change(Id){
 		console.log(Id);
-	    html2canvas(document.getElementById(Id)).then(canvas => {
+	    html2canvas(document.getElementById(Id),{
+		useCORS:true,
+		width:window.screen.availWidth,
+		height:window.screen.availHeight,
+		x:0,
+		y:window.pageYOffset
+		
+		}).then(canvas => {
           //将canvas内容保存为文件并下载
+		  
           canvas.toBlob(function(blob) {
-             saveAs(blob, "hangge.png");
+             saveAs(blob, "hangge.jpg");
           });
+		  
         });
+		
       } 
-    
 </script>
 <script>
 function TEST()
