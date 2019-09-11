@@ -106,15 +106,15 @@ Graph.prototype.topo_sort = function rec(context,node){
         context.sort_result.last_key += 1;
     }
 }
-Graph.prototype.draw_results = function(element,max){
+Graph.prototype.draw_results = function(element){
     if(this.sort_result.last_key!=-1){
-        for(var key = 0;key<this.sort_result.last_key && key<max;key++){
+        for(let key = 0;key<this.sort_result.last_key;key++){
             var graph_str =  'digraph graphname{' + this.sort_result[key][0].name; 
             for(var i=1;i<this.sort_result[key].length;i++){
                 graph_str = graph_str  + ' -> '+this.sort_result[key][i].name ;
             }
             graph_str += ';}';
-           // console.log(graph_str);
+            console.log(graph_str);
             var viz = new Viz();
             viz.renderSVGElement(graph_str)
             .then(function(graph) {
@@ -128,8 +128,6 @@ Graph.prototype.draw_results = function(element,max){
                 // div.style.border='2px dashed black';
                // div.style = 'height: 150px;width: 150px; border: 1px solid #777;';
                 div.appendChild(graph);
-                graph.style.width='100%';
-                graph.style.height='100%';
 				var button=document.createElement("Button");
 				button.name="sort"+""+graphindex+"";
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
@@ -145,27 +143,27 @@ Graph.prototype.draw_results = function(element,max){
         }
     }
 }
-// function main(){
-//     var v1 = new Vertex('V1');
-//     var v2 = new Vertex('V2');
-//     var v3 = new Vertex('V3');
-//     var v4 = new Vertex('V4');
-//     // var v5 = new Vertex('V5');
+function main(){
+    var v1 = new Vertex('V1');
+    var v2 = new Vertex('V2');
+    var v3 = new Vertex('V3');
+    var v4 = new Vertex('V4');
+    // var v5 = new Vertex('V5');
   
-//     var e1 = new Edge(v1,v2);
-//     var e2 = new Edge(v1,v3);
-//     var e3 = new Edge(v1,v4);
-//     var e4 = new Edge(v4,v1);
-//     // var e4 = new Edge(v2,v5);  
-//     // var e5 = new Edge(v3,v4);
+    var e1 = new Edge(v1,v2);
+    var e2 = new Edge(v1,v3);
+    var e3 = new Edge(v1,v4);
+    var e4 = new Edge(v4,v1);
+    // var e4 = new Edge(v2,v5);  
+    // var e5 = new Edge(v3,v4);
  
 
-//     var vertexs = [v1,v2,v3,v4]
-//     var edges = [e1,e2,e3,e4]
-//     var g = new Graph(vertexs,edges);
-//     var t = new ResultTree();
-//     g.topo_sort(g,t.root);
-//     // t.get_sort_result_list(g.sort_result,t.root);
-//     console.log(g.sort_result);
-// }
-//  main();
+    var vertexs = [v1,v2,v3,v4]
+    var edges = [e1,e2,e3,e4]
+    var g = new Graph(vertexs,edges);
+    var t = new ResultTree();
+    g.topo_sort(g,t.root);
+    // t.get_sort_result_list(g.sort_result,t.root);
+    console.log(g.sort_result);
+}
+ main();
