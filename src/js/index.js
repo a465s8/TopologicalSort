@@ -131,7 +131,7 @@ Graph.prototype.draw_results = function(element){
 				var button=document.createElement("Button");
 				button.name="sort"+""+graphindex+"";
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
-				// button.style='height:150px;width:150px;'
+                 //button.style='display:block;height: 10px;width: 20px';
 				button.innerText="导出";
                 div.appendChild(button);
                 element.appendChild(div);
@@ -143,27 +143,27 @@ Graph.prototype.draw_results = function(element){
         }
     }
 }
-function main(){
-    var v1 = new Vertex('V1');
-    var v2 = new Vertex('V2');
-    var v3 = new Vertex('V3');
-    var v4 = new Vertex('V4');
-    // var v5 = new Vertex('V5');
+// function main(){
+//     var v1 = new Vertex('V1');
+//     var v2 = new Vertex('V2');
+//     var v3 = new Vertex('V3');
+//     var v4 = new Vertex('V4');
+//     // var v5 = new Vertex('V5');
   
-    var e1 = new Edge(v1,v2);
-    var e2 = new Edge(v1,v3);
-    var e3 = new Edge(v1,v4);
-    var e4 = new Edge(v4,v1);
-    // var e4 = new Edge(v2,v5);  
-    // var e5 = new Edge(v3,v4);
+//     var e1 = new Edge(v1,v2);
+//     var e2 = new Edge(v1,v3);
+//     var e3 = new Edge(v1,v4);
+//     var e4 = new Edge(v4,v1);
+//     // var e4 = new Edge(v2,v5);  
+//     // var e5 = new Edge(v3,v4);
  
 
-    var vertexs = [v1,v2,v3,v4]
-    var edges = [e1,e2,e3,e4]
-    var g = new Graph(vertexs,edges);
-    var t = new ResultTree();
-    g.topo_sort(g,t.root);
-    // t.get_sort_result_list(g.sort_result,t.root);
-    console.log(g.sort_result);
-}
- main();
+//     var vertexs = [v1,v2,v3,v4]
+//     var edges = [e1,e2,e3,e4]
+//     var g = new Graph(vertexs,edges);
+//     var t = new ResultTree();
+//     g.topo_sort(g,t.root);
+//     // t.get_sort_result_list(g.sort_result,t.root);
+//     console.log(g.sort_result);
+// }
+//  main();
