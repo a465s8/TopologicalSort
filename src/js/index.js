@@ -138,6 +138,7 @@ Graph.prototype.draw_results = function(element,max){
 				button.name="sort"+""+graphindex+"";
 				button.setAttribute("onclick", "javascript:change($(this).attr('name'));");
                 button.style='display:block;';
+                button.className='btn btn-dark'
 				button.innerText="导出";
                 div.appendChild(button);
                 element.appendChild(div);
